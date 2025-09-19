@@ -25,14 +25,14 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Install Redis extension
 RUN pecl install redis && docker-php-ext-enable redis
 
-# Copy existing application directory contents
-COPY . /var/www
-
-# Copy existing application directory permissions
-COPY --chown=www-data:www-data . /var/www
+# Create app directory and set permissions
+RUN mkdir -p /var/www && chown -R www-data:www-data /var/www
 
 # Change current user to www
 USER www-data
+
+# Set working directory
+WORKDIR /var/www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000

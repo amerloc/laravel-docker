@@ -4,10 +4,16 @@
 
 echo "🚀 Setting up Laravel 12 + Livewire 3 Docker Development Environment..."
 
+# Create laravel-app directory if it doesn't exist
+if [ ! -d laravel-app ]; then
+    echo "📁 Creating laravel-app directory..."
+    mkdir -p laravel-app
+fi
+
 # Create .env file if it doesn't exist
-if [ ! -f .env ]; then
+if [ ! -f laravel-app/.env ]; then
     echo "📝 Creating .env file..."
-    cat > .env << 'EOF'
+    cat > laravel-app/.env << 'EOF'
 APP_NAME=Laravel
 APP_ENV=local
 APP_KEY=
@@ -81,9 +87,10 @@ echo "⏳ Waiting for database to be ready..."
 sleep 10
 
 # Install Laravel 12 if not already installed
-if [ ! -f composer.json ]; then
+if [ ! -f laravel-app/composer.json ]; then
     echo "📦 Installing Laravel 12..."
-    docker-compose exec app composer create-project laravel/laravel:^12.0 . --prefer-dist
+    # Create Laravel project directly in the app directory
+    docker-compose exec app composer create-project laravel/laravel:^12.0 /var/www --prefer-dist
     
     # Install Livewire 3
     echo "⚡ Installing Livewire 3..."
@@ -112,10 +119,14 @@ else
     # Install dependencies
     echo "📦 Installing/updating dependencies..."
     docker-compose exec app composer install
-    docker-compose exec app npm install
+    
+    # Install Node.js dependencies if package.json exists
+    if [ -f laravel-app/package.json ]; then
+        docker-compose exec app npm install
+    fi
     
     # Generate application key if not set
-    if ! grep -q "APP_KEY=base64:" .env; then
+    if ! grep -q "APP_KEY=base64:" laravel-app/.env; then
         echo "🔑 Generating application key..."
         docker-compose exec app php artisan key:generate
     fi
