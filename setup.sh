@@ -89,8 +89,12 @@ sleep 10
 # Install Laravel 12 if not already installed
 if [ ! -f laravel-app/composer.json ]; then
     echo "📦 Installing Laravel 12..."
-    # Create Laravel project directly in the app directory
-    docker-compose exec app composer create-project laravel/laravel:^12.0 /var/www --prefer-dist
+    # Create Laravel project in a temporary directory first, then move it
+    docker-compose exec --user root app composer create-project laravel/laravel:^12.0 /tmp/laravel --prefer-dist
+    # Move Laravel files to the correct location and fix permissions
+    docker-compose exec --user root app sh -c "cd /tmp/laravel && cp -r * /var/www/ && cp -r .* /var/www/ 2>/dev/null || true && chown -R www-data:www-data /var/www"
+    # Clean up temporary directory
+    docker-compose exec --user root app rm -rf /tmp/laravel
     
     # Install Livewire 3
     echo "⚡ Installing Livewire 3..."

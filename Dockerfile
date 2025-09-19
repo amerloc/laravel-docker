@@ -28,11 +28,11 @@ RUN pecl install redis && docker-php-ext-enable redis
 # Create app directory and set permissions
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www
 
-# Change current user to www
-USER www-data
-
 # Set working directory
 WORKDIR /var/www
+
+# Change current user to www
+USER www-data
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
