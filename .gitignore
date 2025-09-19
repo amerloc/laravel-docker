@@ -1,22 +1,10 @@
-# Laravel
-/vendor/
-/node_modules/
-/public/hot
-/public/storage
-/storage/*.key
-/storage/app/public
-/storage/framework/cache/data
-/storage/framework/sessions
-/storage/framework/testing
-/storage/framework/views
-/storage/logs
-/bootstrap/cache/*.php
+# Laravel Application (ignore entire directory)
+laravel-app/
 
 # Environment files
 .env
 .env.backup
 .env.production
-.phpunit.result.cache
 
 # IDE files
 .vscode/
@@ -68,20 +56,7 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# Laravel Mix
-/public/js
-/public/css
-/public/mix-manifest.json
-
-# Laravel Telescope
-/storage/telescope
-
-# Laravel Horizon
-/storage/horizon
-
-# Laravel Dusk
-/tests/Browser/screenshots
-/tests/Browser/console
+# Laravel Mix, Telescope, Horizon, Dusk (handled by laravel-app/ ignore above)
 
 # Laravel Sail
 /.env.sail

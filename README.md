@@ -1,6 +1,16 @@
 # Laravel 12 + Livewire 3 Docker Development Environment
 
-A complete Docker development environment for Laravel 12 with Livewire 3, including MySQL, Redis, Nginx, and Mailpit.
+A complete Docker development environment template for Laravel 12 with Livewire 3, including MySQL, Redis, Nginx, and Mailpit. This repository provides the Docker setup - your Laravel application will be created in the `laravel-app/` directory when you run the setup script.
+
+## 🎯 Repository Purpose
+
+This repository is a **Docker development environment template**. It contains:
+- ✅ Docker configuration files
+- ✅ Setup scripts
+- ✅ Documentation
+- ❌ **No Laravel application code** (created by setup script)
+
+The `laravel-app/` directory is ignored by Git, so each project using this template will have its own Laravel application that doesn't get committed to this repository.
 
 ## 🚀 Quick Start
 
@@ -102,7 +112,19 @@ docker-compose exec app npm run dev
 
 ```
 Laravel/
-├── docker/
+├── laravel-app/            # Laravel application (created by setup script, ignored by git)
+│   ├── app/                # Laravel's app directory (models, controllers, etc.)
+│   ├── config/
+│   ├── database/
+│   ├── public/
+│   ├── resources/
+│   ├── routes/
+│   ├── storage/
+│   ├── vendor/
+│   ├── .env
+│   ├── composer.json
+│   └── artisan
+├── docker/                 # Docker configuration files
 │   ├── nginx/
 │   │   └── conf.d/
 │   │       └── app.conf
@@ -110,10 +132,11 @@ Laravel/
 │   │   └── local.ini
 │   └── mysql/
 │       └── my.cnf
-├── docker-compose.yml
-├── Dockerfile
-├── setup.sh
-└── README.md
+├── docker-compose.yml      # Docker services configuration
+├── Dockerfile              # PHP container configuration
+├── setup.sh               # Automated setup script
+├── .gitignore             # Ignores laravel-app/ directory
+└── README.md              # This file
 ```
 
 ## 🔧 Configuration
